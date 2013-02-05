@@ -2,6 +2,9 @@
 LOCAL_BRANCH=$1
 URL=$2
 REMOTE_BRANCH=$3
+
+set -x
+
 git fetch $URL $REMOTE_BRANCH
 git branch $LOCAL_BRANCH `git merge-base master FETCH_HEAD`
 git checkout $LOCAL_BRANCH

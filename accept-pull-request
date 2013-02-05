@@ -9,6 +9,7 @@ function try {
 	return $STATUS
 }
 
+set -x
 
 try git rebase master $LOCAL_BRANCH
 try git checkout master
