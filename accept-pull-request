@@ -1,0 +1,16 @@
+LOCAL_BRANCH=$1
+
+function try {
+	"$@"
+	STATUS=$?
+	if [ $STATUS -ne 0 ]; then
+		exit 1
+	fi
+	return $STATUS
+}
+
+
+try git rebase master $LOCAL_BRANCH
+try git checkout master
+try git merge $LOCAL_BRANCH
+try git branch -d $LOCAL_BRANCH
