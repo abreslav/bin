@@ -1,5 +1,6 @@
 #!/bin/sh
 LOCAL_BRANCH=$1
 set -x
+git reset --hard
 git checkout master
 git branch -D $LOCAL_BRANCH
