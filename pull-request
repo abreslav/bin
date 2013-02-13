@@ -1,16 +1,23 @@
 #!/bin/sh
-if [ "$#" -ne 3 ]; then
-  echo "Usage: pull-request <local branch> <url> <remote branch>"
-  exit 1
-fi
 
-LOCAL_BRANCH=$1
-URL=$2
-REMOTE_BRANCH=$3
+while getopts fr opt; do
+	case $opt in
+		f) FETCH="FETCH";;
+		r) REBASE="REBASE";;
+	esac
+done
+
+ID=${!OPTIND}
+LOCAL_BRANCH=pr/$ID
+
+echo Checking out pull request $ID
 
 set -x
 
-git fetch $URL $REMOTE_BRANCH
-git branch $LOCAL_BRANCH `git merge-base master FETCH_HEAD`
+if [ "$FETCH" ]; then
+	git fetch
+fi
 git checkout $LOCAL_BRANCH
-git merge FETCH_HEAD
+if [ "$REBASE" ]; then
+	git rebase master
+fi

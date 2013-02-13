@@ -1,4 +1,8 @@
-LOCAL_BRANCH=$1
+if [ "$#" -ne 1 ]; then
+	echo "Usage: accept-pull-request <pull request id>"
+fi
+
+LOCAL_BRANCH=pr/$1
 
 function try {
 	"$@"
@@ -14,4 +18,4 @@ set -x
 try git rebase master $LOCAL_BRANCH
 try git checkout master
 try git merge $LOCAL_BRANCH
-try git branch -d $LOCAL_BRANCH
+try git branch -D $LOCAL_BRANCH
